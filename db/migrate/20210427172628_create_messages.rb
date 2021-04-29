@@ -1,9 +1,9 @@
 class CreateMessages < ActiveRecord::Migration[6.1]
   def change
     create_table :messages do |t|
-      t.text :body
+      t.text :content
       t.references :user
-      t.references :conversation
+      t.references :chatroom
 
       t.timestamps
     end
