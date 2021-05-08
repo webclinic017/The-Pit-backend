@@ -12,8 +12,8 @@ class Api::V1::NoteBooksController < Api::V1::BaseController
     end
 
     def create
+        note_book = NoteBook.create!(note_book_params)
 
-        note_book = NoteBook.find_or_create_by(note_book_params)
 
         if note_book.save
             render json: serialize_model(note_book)
@@ -26,7 +26,7 @@ class Api::V1::NoteBooksController < Api::V1::BaseController
 
         def note_book_params
             # require !==
-            params.require(:note_book).permit(:name, :user_id, :profile_image)
+            params.require(:note_book).permit(:name, :user_id, :delete_object)
         end
 
 
