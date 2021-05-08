@@ -23,7 +23,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     # POST /signup
     def signup
       # get the user info from the form (params)
-      user_params = params.permit(:email, :password)
+      user_params = params.permit(:name, :email, :password)
       # create a new user in the database (User.create)
       user = User.create(user_params)
       if user.valid?
