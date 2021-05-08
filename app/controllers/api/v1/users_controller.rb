@@ -14,7 +14,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       if user && user.authenticate(params[:password])
         # save the user id in an encoded token
         token = JWT.encode({ user_id: user.id }, 'my$ecretK3y', 'HS256')
-        render json: { user: serialize_model(user), token: token }
+        render json: { user: serialize_model(user,  include: ['note-books', 'note-books.notes', 'note-books.notes.attached-files']), token: token }
       else
         render json: { errors: ["Invalid username or password"] }, status: :unauthorized
       end
@@ -29,7 +29,7 @@ class Api::V1::UsersController < Api::V1::BaseController
       if user.valid?
         # send back a response with new user
         token = JWT.encode({ user_id: user.id }, 'my$ecretK3y', 'HS256')
-        render json: { user: serialize_model(user), token: token }, status: :created
+        render json: { user: serialize_model(user,  include: ['note-books', 'note-books.notes', 'note-books.notes.attached-files']), token: token }, status: :created
       else
         # error messages
         render json: { errors: user.errors.full_messages }, status: :unprocessable_entity

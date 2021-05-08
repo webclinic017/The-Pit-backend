@@ -10,10 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_173057) do
+ActiveRecord::Schema.define(version: 2021_05_08_042005) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "note_books", force: :cascade do |t|
+    t.string "name"
+    t.integer "user_id"
+    t.boolean "delete_object"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "notes", force: :cascade do |t|
+    t.string "name"
+    t.text "paragraph"
+    t.integer "priority"
+    t.bigint "note_book_id", null: false
+    t.boolean "delete_object"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["note_book_id"], name: "index_notes_on_note_book_id"
+  end
 
   create_table "stock_purchases", force: :cascade do |t|
     t.string "symbol"
